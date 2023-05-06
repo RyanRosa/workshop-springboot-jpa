@@ -7,9 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zicartola.course.entites.Order;
-import com.zicartola.course.entites.User;
 import com.zicartola.course.repositories.OrderRepository;
-import com.zicartola.course.repositories.UserRepository;
 
 @Service
 public class OrderService {
