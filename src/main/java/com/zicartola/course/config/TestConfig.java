@@ -10,10 +10,12 @@ import org.springframework.context.annotation.Profile;
 
 import com.zicartola.course.entites.Category;
 import com.zicartola.course.entites.Order;
+import com.zicartola.course.entites.OrderItem;
 import com.zicartola.course.entites.Product;
 import com.zicartola.course.entites.User;
 import com.zicartola.course.entites.enums.OrderStatus;
 import com.zicartola.course.repositories.CategoryRepository;
+import com.zicartola.course.repositories.OrderItemRepository;
 import com.zicartola.course.repositories.OrderRepository;
 import com.zicartola.course.repositories.ProductReposity;
 import com.zicartola.course.repositories.UserRepository;
@@ -33,7 +35,10 @@ public class TestConfig implements CommandLineRunner {
 
 	@Autowired
 	private ProductReposity productRepository;
-
+	
+	@Autowired
+	private OrderItemRepository orderItemRepository;
+	
 	@Override
 	public void run(String... args) throws Exception {
 
@@ -54,6 +59,15 @@ public class TestConfig implements CommandLineRunner {
 		p1.getCategories().add(c1);
 		
 		productRepository.save(p1);
+		
+		
+		OrderItem oi1 = new OrderItem(o1,p1,2,p1.getPrice());
+		OrderItem oi2 = new OrderItem(o1,p1,1,p1.getPrice());
+		OrderItem oi3 = new OrderItem(o1,p1,4,p1.getPrice());
+		OrderItem oi4 = new OrderItem(o3,p1,2,p1.getPrice());
+		
+		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		
 	}
 
 }
