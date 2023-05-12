@@ -3,6 +3,7 @@ package com.zicartola.course.entites;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zicartola.course.entites.pk.OrderItemPk;
 
 import jakarta.persistence.EmbeddedId;
@@ -16,6 +17,7 @@ public class OrderItem implements Serializable {
 
 	@EmbeddedId
 	private OrderItemPk id = new OrderItemPk();
+	
 	private Integer quantity;
 	private Double price;
 

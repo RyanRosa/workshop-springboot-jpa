@@ -14,8 +14,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tb_product")
@@ -38,6 +38,9 @@ public class Product implements Serializable {
 	inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<Category>();
 
+	@OneToMany(mappedBy = "id.product")
+	private Set<OrderItem> items = new HashSet<OrderItem>();
+	
 	public Product() {
 
 	}
@@ -90,6 +93,19 @@ public class Product implements Serializable {
 		this.imgUrl = imgUrl;
 	}
 
+	public Set<Category> getCategories() {
+		return categories;
+	}
+	
+	
+	@JsonIgnore
+	public Set<Order> getOrders(){
+		Set<Order> set = new HashSet<>();
+		for (OrderItem order : items) {
+			set.add(order.getOrder());
+		}
+		return set;
+	}
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -107,8 +123,6 @@ public class Product implements Serializable {
 		return Objects.equals(id, other.id);
 	}
 
-	public Set<Category> getCategories() {
-		return categories;
-	}
+	
 
 }
