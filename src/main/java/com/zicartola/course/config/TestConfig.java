@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.zicartola.course.entites.Category;
 import com.zicartola.course.entites.Order;
 import com.zicartola.course.entites.OrderItem;
+import com.zicartola.course.entites.Payment;
 import com.zicartola.course.entites.Product;
 import com.zicartola.course.entites.User;
 import com.zicartola.course.entites.enums.OrderStatus;
@@ -44,11 +45,17 @@ public class TestConfig implements CommandLineRunner {
 
 		User u1 = new User(null, "Maria Brown", "maria@gmail.com", "98291283901", "123456");
 		User u2 = new User(null, "Alex Green", "alex@gmail.com", "jkluio9", "123489056");
+		
+		
 		Order o1 = new Order(null, Instant.parse("2023-04-27T06:14:13Z"), OrderStatus.CANCELED, u1);
 		Order o2 = new Order(null, Instant.parse("2023-04-27T06:11:13Z"), OrderStatus.WAITING_PAYMENT, u2);
 		Order o3 = new Order(null, Instant.parse("2022-02-10T01:12:00Z"), OrderStatus.DELIVERED, u1);
+		
+		
 		Category c1 = new Category(null, "Esporte");
 		Category c2 = new Category(null, "Fantasia");
+		
+		
 		Product p1 = new Product(null, "Clean Code", "1234", 2000.0, "https://teste.com");
 		
 		userRepository.saveAll(Arrays.asList(u1, u2));
@@ -67,6 +74,12 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3,p1,2,p1.getPrice());
 		
 		orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+		
+		Payment pay1 = new Payment(null, Instant.parse("2023-12-10T20:12:00Z"), o1);
+		
+		o1.setPayment(pay1);
+		
+		orderRepository.save(o1);
 		
 	}
 
