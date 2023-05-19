@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.zicartola.course.entites.User;
 import com.zicartola.course.repositories.UserRepository;
+import com.zicartola.course.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -21,7 +22,7 @@ public class UserService {
 
 	public User FindById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(()-> new ResourceNotFoundException(id));
 	}
 
 	public User insert(User obj) {
